@@ -18,17 +18,17 @@ CFLAG = -Wall -Wextra -Werror
 
 LINKS = -lmlx -framework OpenGL -framework AppKit
 
-INC = -I ./includes -I ./libft -I /usr/local/include
+INC = -I ./includes -I ./libft -I /usr/local/include -I ./get_next_line
 
 LIBDIR = libft
 
 LIBFT = $(LIBDIR)/libft.a
 
-LIBS = -L /usr/local/lib/ -L ./libft
+LIBS = -L /usr/local/lib/ -L ./libft -lft
 
 SRCDIR = src
 
-SRC = fdf.c
+SRC = fdf.c ft_pointadd.c ft_pointcreate.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -44,7 +44,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
 	@echo FdF compilation is \done'!' :')'	
-#	@./$(NAME)
+	@./$(NAME)
 
 clean:
 	@make clean -C $(LIBDIR)

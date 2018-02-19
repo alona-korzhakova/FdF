@@ -25,7 +25,8 @@ ft_strsub.o ft_strtrim.o ft_strsplit.o ft_itoa.o ft_putchar.o\
 ft_putstr.o ft_putendl.o ft_putnbr.o ft_putchar_fd.o ft_putstr_fd.o\
 ft_putendl_fd.o ft_putnbr_fd.o ft_lstnew.o ft_lstdelone.o ft_lstdel.o\
 ft_lstadd.o ft_lstiter.o ft_lstmap.o ft_strrev.o ft_strlcpy.o\
-ft_itoa_base.o ft_split_white.o ft_print_bits.o ft_reverse_bits.o
+ft_itoa_base.o ft_split_white.o ft_print_bits.o ft_reverse_bits.o\
+get_next_line.o
 # macro INCLUDE, on which the .c files depend. 
 INCLUDE = libft.h
 

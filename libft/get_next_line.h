@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 14:16:49 by akorzhak          #+#    #+#             */
-/*   Updated: 2018/02/18 14:16:51 by akorzhak         ###   ########.fr       */
+/*   Created: 2017/11/29 14:49:06 by akorzhak          #+#    #+#             */
+/*   Updated: 2017/11/29 14:49:09 by akorzhak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include "libft.h"
-# include "get_next_line.h"
-# include "mlx.h"
-# include <stdio.h>
+# include <fcntl.h> //for main (open)
 
-# define ABS(Value) (Value < 0) ? (-Value) : (Value)
+# define BUFF_SIZE 1024
 
-typedef struct		s_ptr
+typedef struct		s_dlist
 {
-	void			*mlx;
-	void			*win;
-}					t_ptr;
+	char			*buff;
+	int				fd;	
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}					t_dlist;
 
-typedef struct		s_point
-{
-	int				x;
-	int				y;
-	int				z;
-	struct s_point	*next;
-	struct s_point	*prev;
-}					t_point;
-
-void 	ft_pointadd(t_point **point, t_point *new);
-t_point		*ft_pointcreate(int x, int y, char *z);
+int		get_next_line(const int fd, char **line);
 
 #endif
