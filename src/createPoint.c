@@ -1,7 +1,7 @@
 
 #include "fdf.h"
 
-t_point		*ft_pointcreate(int x, int y, char *z)
+t_point		*createPoint(int x, int y, char *z)
 {
 	t_point	*point;
 
@@ -10,7 +10,6 @@ t_point		*ft_pointcreate(int x, int y, char *z)
 	point->x = x;
 	point->y = y;
 	point->z = ft_atoi(z);
-	point->prev = NULL;
 	point->next = NULL;
 	return (point);
 }

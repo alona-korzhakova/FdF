@@ -17,12 +17,22 @@
 # include <unistd.h>
 # include <string.h>
 
+# define BUFF_SIZE 1024
+
 typedef struct		s_list
 {
 	void			*content;
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_dlist
+{
+	char			*buff;
+	int				fd;	
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}					t_dlist;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -91,5 +101,7 @@ char				*ft_itoa_base(int value, int base);
 char				**ft_split_white(char *str);
 void				ft_print_bits(unsigned char octet);
 unsigned char		ft_reverse_bits(unsigned char octet);
+
+int					get_next_line(const int fd, char **line);
 
 #endif

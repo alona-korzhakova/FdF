@@ -14,28 +14,40 @@
 # define FDF_H
 
 # include "libft.h"
-# include "get_next_line.h"
 # include "mlx.h"
 # include <stdio.h>
+# include <fcntl.h> //(open)
 
 # define ABS(Value) (Value < 0) ? (-Value) : (Value)
+# define SIZE_X 600
+# define SIZE_Y 600
 
-typedef struct		s_ptr
-{
-	void			*mlx;
-	void			*win;
-}					t_ptr;
 
 typedef struct		s_point
 {
-	int				x;
-	int				y;
-	int				z;
+	double			x;
+	double			y;
+	double			z;
 	struct s_point	*next;
-	struct s_point	*prev;
 }					t_point;
 
-void 	ft_pointadd(t_point **point, t_point *new);
-t_point		*ft_pointcreate(int x, int y, char *z);
+typedef struct		s_ptr
+{
+	int				fd;
+	int				i;
+	void			*mlx;
+	void			*win;
+	double 			x;
+	double			y;
+	double			a;
+	double			b;
+	t_point 		*point;
+	t_point			*rot;
+}					t_ptr;
+
+void 	pointAdd(t_point **point, t_point *new);
+t_point		*pointCreate(int x, int y, char *z);
 
 #endif
+
+	// 
