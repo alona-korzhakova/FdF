@@ -54,10 +54,11 @@ t_point 	*centerMap(t_point *point, t_ptr *p)
 	return (begin);
 }
 
-void	readMap(char *map, t_ptr *p)
+t_point 	*readMap(char *map, t_ptr *p)
 {	
 	char *line;
 	char **arr;
+	t_point *point = NULL;
 	t_point *begin;
 
 	p->fd = open(map, O_RDONLY);
@@ -68,7 +69,7 @@ void	readMap(char *map, t_ptr *p)
 		arr = ft_strsplit(line, ' ');
 		if (!p->y)
 		{
-			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i++])); //what addPoint returns???
+			addPoint(&point, createPoint(p->x++, p->y, arr[p->i++]));
 			begin = point;
 		}
 		while (arr[p->i])
@@ -77,16 +78,7 @@ void	readMap(char *map, t_ptr *p)
 		ft_strdel(arr);
 		p->y++;
 	}
-	point = begin;
-}
-
-void	initializePtr(t_ptr *p)
-{
-	p->zoom = 40;
-	p->y = 0;
-	p->Lz = 0.8;
-	p->Lx = 1.1;
-	p->point = NULL;
+	return (begin);	
 }
 
 int		main(int argc, char **argv)
@@ -95,8 +87,11 @@ int		main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		initializePtr(&p);
-		readMap(argv[1], &p);
+		p.y = 0;
+		p.Lz = 0.8;
+		p.Lx = 1.1;
+		p.zoom = 40; 
+		p.point = readMap(argv[1], &p);
 		p.point = centerMap(p.point, &p);
 		p.point = rotateMap(p.point, &p);
 		p.point = projectMap(p.point, &p);

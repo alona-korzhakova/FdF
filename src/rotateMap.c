@@ -1,13 +1,21 @@
 
 #include "fdf.h"
 
-t_point 	*rotateMap(t_point *point, t_ptr *p)
+t_point 	*rotateMap(t_ptr *p)
 {
-	t_point *begin;
+	t_point *ptr;
+	double y;
 
-	begin = point;
-	while (point)
+	ptr = p->point;
+	while (ptr)
 	{
-		point->y = point->y
+		ptr->nx = ptr->x * cos(p->Lz) - ptr->y * sin(p->Lz);
+		ptr->ny = ptr->x * sin(p->Lz) + ptr->y * cos(p->Lz);
 
+		y = ptr->ny * cos(p->Lx) + ptr->z * sin(p->Lx);
+		ptr->nz = -(ptr->ny) * sin(p->Lx) + ptr->z * cos(p->Lx);
+		ptr->ny = y;
+		ptr = ptr->next;
+	}
+	return (p);
 }
