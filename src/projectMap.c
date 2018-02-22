@@ -1,18 +1,17 @@
 
 #include "fdf.h"
 
-t_point 	*projectMap(t_point *point, t_ptr *p)
+void	projectMap(t_ptr *p)
 {
-	t_point *begin;
+	t_point *ptr;
 	double temp;
 
-	begin = point;
-	while (point)
+	ptr = p->point;
+	while (ptr)
 	{
-		temp = SIZE_Y / (p->zoom + point->nz)
-		point->nx = point->nx * temp + SIZE_X / 2;
-		point->ny = point->nx * temp + SIZE_Y / 2;
-		point = point->next;
+		temp = SIZE_Y / (p->zoom + ptr->nz);
+		ptr->nx = ptr->nx * temp + SIZE_X / 2;
+		ptr->ny = ptr->ny * temp + SIZE_Y / 2;
+		ptr = ptr->next;
 	}
-	return (begin);
 }

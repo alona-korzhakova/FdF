@@ -1,7 +1,7 @@
 
 #include "fdf.h"
 
-t_point 	*rotateMap(t_ptr *p)
+void 	rotateMap(t_ptr *p)
 {
 	t_point *ptr;
 	double y;
@@ -17,5 +17,4 @@ t_point 	*rotateMap(t_ptr *p)
 		ptr->ny = y;
 		ptr = ptr->next;
 	}
-	return (p);
 }

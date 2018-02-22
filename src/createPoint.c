@@ -9,7 +9,7 @@ t_point		*createPoint(int x, int y, char *z)
 		return (0);
 	point->x = x;
 	point->y = y;
-	point->z = ft_atoi(z);
+	point->z = -ft_atoi(z);
 	point->next = NULL;
 	return (point);
 }

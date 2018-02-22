@@ -38,20 +38,19 @@
 // }
 
 
-t_point 	*centerMap(t_point *point, t_ptr *p)
+void 	centerMap(t_ptr *p)
 {
-	t_point *begin;
+	t_point *temp;
 
 	p->a = p->x / 2; /*the number of columns*/
 	p->b = p->y / 2; /*the number of rows*/
-	begin = point;
-	while (point)
+	temp = p->point;
+	while (temp)
 	{
-		point->x = point->x - p->a + SIZE_X / 2;
-		point->y = point->y - p->b + SIZE_Y / 2;
-		point = point->next;
+		temp->x = temp->x - p->a;
+		temp->y = temp->y - p->b;
+		temp = temp->next;
 	}
-	return (begin);
 }
 
 void	readMap(char *map, t_ptr *p)
@@ -59,6 +58,7 @@ void	readMap(char *map, t_ptr *p)
 	char *line;
 	char **arr;
 	t_point *begin;
+	t_point *upper;
 
 	p->fd = open(map, O_RDONLY);
 	while (get_next_line(p->fd, &line) > 0)
@@ -68,16 +68,17 @@ void	readMap(char *map, t_ptr *p)
 		arr = ft_strsplit(line, ' ');
 		if (!p->y)
 		{
-			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i++])); //what addPoint returns???
-			begin = point;
+			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i++]));
+			begin = p->point;
+			upper = begin;
 		}
 		while (arr[p->i])
-			addPoint(&point, createPoint(p->x++, p->y, arr[p->i++]));
+			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i++]));
 		ft_strdel(&line);
 		ft_strdel(arr);
 		p->y++;
 	}
-	point = begin;
+	p->point = begin;
 }
 
 void	initializePtr(t_ptr *p)
@@ -87,6 +88,9 @@ void	initializePtr(t_ptr *p)
 	p->Lz = 0.8;
 	p->Lx = 1.1;
 	p->point = NULL;
+	p->mlx = mlx_init();
+	p->win = mlx_new_window(p->mlx, SIZE_X, SIZE_Y, "FdF");
+	p->color = 0xFFFFFF;
 }
 
 int		main(int argc, char **argv)
@@ -97,13 +101,14 @@ int		main(int argc, char **argv)
 	{
 		initializePtr(&p);
 		readMap(argv[1], &p);
-		p.point = centerMap(p.point, &p);
-		p.point = rotateMap(p.point, &p);
-		p.point = projectMap(p.point, &p);
+		centerMap(&p);
+		rotateMap(&p);
+		projectMap(&p);
+		drawImage(&p);
 		// while(p.point)
 		// {
-		// 	printf("%f\t", p.point->z);
-		// 	printf("%f\n", p.point->nz);
+		// 	printf("%f\t", p.point->x);
+		// 	printf("%f\n", p.point->nx);
 		// 	p.point = p.point->next;
 		// }
 		// printf("%f\n", p.point->x);
@@ -111,7 +116,7 @@ int		main(int argc, char **argv)
 		// p.win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "FdF");
 		// mlx_new_image(p.mlx, p.win				
 		// mlx_hook(p.win, 2, 5, handle_key, &p);
-		// mlx_loop(p.mlx);
+		mlx_loop(p.mlx);
 		// while(newp)
 		// {
 		// 	printf("%f\t", point->z);

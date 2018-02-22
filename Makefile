@@ -28,7 +28,8 @@ LIBS = -L /usr/local/lib/ -lmlx -L ./libft -lft
 
 SRCDIR = src
 
-SRC = fdf.c addPoint.c createPoint.c rotateMap.c projectMap.c
+SRC = fdf.c addPoint.c createPoint.c rotateMap.c projectMap.c\
+		drawImage.c
 
 OBJ = $(SRC:.c=.o)
 
