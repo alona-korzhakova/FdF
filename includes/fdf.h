@@ -19,9 +19,8 @@
 # include <fcntl.h> //(open)
 # include <math.h>
 
-# define ABS(Value) (Value < 0) ? (-Value) : (Value)
-# define SIZE_X 600
-# define SIZE_Y 600
+# define SIZE_X 1500
+# define SIZE_Y 1000
 
 
 typedef struct		s_point
@@ -59,17 +58,17 @@ typedef struct		s_ptr
 
 typedef struct		s_dot
 {
-	int				x0;
-	int				y0;
-	int				x1;
-	int				y1;
+	double			x0;
+	double			y0;
+	double			x1;
+	double			y1;
 	int 			dx;
 	int				dy;
 	int				sx;
 	int				sy;
-	int				error;
-	int				derror;
-	int				dir;
+	int				d;
+	int				d1;
+	int				d2;
 }					t_dot;
 
 void 		addPoint(t_point **point, t_point *new);

@@ -83,14 +83,14 @@ void	readMap(char *map, t_ptr *p)
 
 void	initializePtr(t_ptr *p)
 {
-	p->zoom = 40;
+	p->zoom = 30;
 	p->y = 0;
 	p->Lz = 0.8;
 	p->Lx = 1.1;
 	p->point = NULL;
 	p->mlx = mlx_init();
 	p->win = mlx_new_window(p->mlx, SIZE_X, SIZE_Y, "FdF");
-	p->color = 0xFFFFFF;
+	p->color = 0x33CCFF;
 }
 
 int		main(int argc, char **argv)
