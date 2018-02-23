@@ -19,9 +19,8 @@
 # include <fcntl.h> //(open)
 # include <math.h>
 
-# define SIZE_X 1500
-# define SIZE_Y 1000
-
+# define SIZE_X 1700
+# define SIZE_Y 1200
 
 typedef struct		s_point
 {
@@ -46,6 +45,8 @@ typedef struct		s_ptr
 	int				size_line;
 	int				end;
 	int				color;
+	int				size_x;
+	int				size_y;
 	char			*addr;
 	double			x;
 	double 			y;
@@ -53,6 +54,7 @@ typedef struct		s_ptr
 	double			b;
 	double			Lz;
 	double 			Lx;
+	char			perspective;
 	t_point 		*point;
 }					t_ptr;
 

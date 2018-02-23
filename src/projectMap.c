@@ -7,11 +7,24 @@ void	projectMap(t_ptr *p)
 	double temp;
 
 	ptr = p->point;
-	while (ptr)
+	if (p->perspective)
 	{
-		temp = SIZE_Y / (p->zoom + ptr->nz);
-		ptr->nx = ptr->nx * temp + SIZE_X / 2;
-		ptr->ny = ptr->ny * temp + SIZE_Y / 2;
-		ptr = ptr->next;
+		while (ptr)
+		{
+			temp = SIZE_Y / (p->zoom + ptr->nz);
+			ptr->nx = ptr->nx * temp + p->size_x;
+			ptr->ny = ptr->ny * temp + p->size_y;
+			ptr = ptr->next;
+		}
+	}
+	else
+	{
+		while (ptr)
+		{
+			temp = SIZE_Y / (p->zoom);
+			ptr->nx = ptr->nx * temp + p->size_x;
+			ptr->ny = ptr->ny * temp + p->size_y - ptr->nz;
+			ptr = ptr->next;
+		}
 	}
 }

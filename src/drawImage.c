@@ -7,7 +7,7 @@ void	drawPixel(int x, int y, t_ptr *p)
 	t_point	*ptr;
 
 	ptr = p->point;
-	if (x >= 0 && x < SIZE_X && y >= 0 && y <= SIZE_Y)
+	if (x >= 0 && x < SIZE_X && y >= 0 && y < SIZE_Y)
 	{
 		i = x * p->bpp + y * p->size_line;
 		p->addr[i] = p->color;
@@ -90,7 +90,6 @@ void	createImage(t_ptr *p)
 		drawPixel(d.x0, d.y0, p);
 		if (i > p->x)
 		{	
-		//	printf("%d\n", upperDot->nx == p->point->nx);
 			d.x1 = upperDot->nx;
 			d.y1 = upperDot->ny;
 			connectDots(&d, p);
@@ -104,9 +103,7 @@ void	createImage(t_ptr *p)
 				connectDots(&d, p);
 		}
 		ptr = ptr->next;
-
 	}
-	drawPixel(d.x1, d.y1, p);
 }
 
 void	drawImage(t_ptr *p)

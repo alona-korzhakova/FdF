@@ -12,30 +12,84 @@
 
 #include "fdf.h"
 
-// int 	handle_key(int keycode, t_ptr *param)
-// {
-// 	if (keycode == 8)
-// 	{
-// 		printf("%f\n", param->point->x);
-// 		printf("%f\n", param->point->y);
-// 		param->point = param->point->next;
-// 		printf("%f\n", param->point->x);
-// 		printf("%f\n", param->point->y);
-// 		param->point = param->point->next;
-// 		printf("%f\n", param->point->x);
-// 		printf("%f\n", param->point->y);
-// 		mlx_pixel_put(param->mlx, param->win, param->point->x,
-// 			param->point->y, 6750054);
-// 		param->point = param->point->next;
-// 		mlx_pixel_put(param->mlx, param->win, param->point->x,
-// 			param->point->y, 6750054);
-// 		param->point = param->point->next;
-// 		mlx_pixel_put(param->mlx, param->win, param->point->x,
-// 			param->point->y, 6750054);
-// 		param->point = param->point->next;
-// 	}
-// 	return (0);
-// }
+void	displayMap(t_ptr *p)
+{
+	rotateMap(p);
+	projectMap(p);
+	drawImage(p);
+}
+
+void	initializePtr(t_ptr *p)
+{
+	p->zoom = 61;
+	p->Lz = 0.8;
+	p->Lx = 1.1;
+	p->color = 0xFFFFFF;
+	p->size_x = SIZE_X / 2;
+	p->size_y = SIZE_Y / 2;
+	p->perspective = 0;
+}
+
+int 	handle_key(int keycode, t_ptr *p)
+{
+	t_point *ptr;
+
+	ptr = p->point;
+	if (keycode == 83)
+		p->Lz += 0.1;
+	if (keycode == 84)
+		p->Lz -= 0.1;
+	if (keycode == 86)
+		p->Lx += 0.1;
+	if (keycode == 87)
+		p->Lx -= 0.1;
+	if (keycode == 123)
+		p->size_x -= 5;
+	if (keycode == 124)
+		p->size_x += 5;
+	if (keycode == 126)
+		p->size_y += 5;
+	if (keycode == 125)
+		p->size_y -= 5;
+	if (keycode == 53)
+	{
+		write(1, "Fdf has been closed.\n", 21);
+		exit(0);
+	}
+	if (keycode == 49)
+		initializePtr(p);
+	if (keycode == 35)
+		p->perspective = p->perspective ? 0 : 1;
+	if (keycode == 115)
+		p->zoom += 5;
+	if (keycode == 119)
+		p->zoom -= 5;
+	if (keycode == 36)
+	{
+		if (p->color == 0xFFFFFF)
+			p->color = 0xFF0000;
+		else if (p->color == 0xFF0000)
+			p->color = 0xFF8000;
+		else if (p->color == 0xFF8000)
+			p->color = 0xFFFF00;
+		else if (p->color == 0xFFFF00)
+			p->color = 0xBFFF00;
+		else if (p->color == 0xBFFF00)
+			p->color = 0x40FF00;
+		else if (p->color == 0x40FF00)
+			p->color = 0x4DD2FF;
+		else if (p->color == 0x4DD2FF)
+			p->color = 0x4D4DFF;
+		else if (p->color == 0x4D4DFF)
+			p->color = 0x7A00CC;
+		else if (p->color == 0x7A00CC)
+			p->color = 0xFF4DD2;
+		else
+			p->color = 0xFFFFFF;
+	}
+	displayMap(p);
+	return (0);
+}
 
 
 void 	centerMap(t_ptr *p)
@@ -81,16 +135,12 @@ void	readMap(char *map, t_ptr *p)
 	p->point = begin;
 }
 
-void	initializePtr(t_ptr *p)
+int 	exitFdf(t_ptr *p)
 {
-	p->zoom = 30;
-	p->y = 0;
-	p->Lz = 0.8;
-	p->Lx = 1.1;
-	p->point = NULL;
-	p->mlx = mlx_init();
-	p->win = mlx_new_window(p->mlx, SIZE_X, SIZE_Y, "FdF");
-	p->color = 0x33CCFF;
+	p = NULL;
+	write(1, "Fdf has been closed.\n", 21);
+	exit(0);
+	return (0);
 }
 
 int		main(int argc, char **argv)
@@ -99,52 +149,17 @@ int		main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		p.mlx = mlx_init();
+		p.win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "FdF");
+		p.point = NULL;
+		p.y = 0;
 		initializePtr(&p);
 		readMap(argv[1], &p);
 		centerMap(&p);
-		rotateMap(&p);
-		projectMap(&p);
-		drawImage(&p);
-		// while(p.point)
-		// {
-		// 	printf("%f\t", p.point->x);
-		// 	printf("%f\n", p.point->nx);
-		// 	p.point = p.point->next;
-		// }
-		// printf("%f\n", p.point->x);
-		// p.mlx = mlx_init();
-		// p.win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "FdF");
-		// mlx_new_image(p.mlx, p.win				
-		// mlx_hook(p.win, 2, 5, handle_key, &p);
+		displayMap(&p);			
+		mlx_hook(p.win, 2, 5, handle_key, &p);
+		mlx_hook(p.win, 17, 5, exitFdf, &p);
 		mlx_loop(p.mlx);
-		// while(newp)
-		// {
-		// 	printf("%f\t", point->z);
-		// 	printf("%f\n", newp->z);
-		// 	point = point->next;
-		// 	newp = newp->next;
-		// }
-		// printf("fd: %d\n", param.ptr.fd);
-		// printf("x: %f\n", param.ptr.x);
-		// printf("x: %f\n", param.point->x);
-
-
-	// printf("a: %d\n", p.a);
-	// printf("b: %d\n", p.b);
-	
-		
-		// while (point)
-		// {
-		// 	printf("%f\n", point->x);
-		// 	point = point->next;
-		// }
-	}	
+	}
 	return (0);
 }
-
-	// t_ptr	ptr;
-
-	// 
-	// ptr.win = mlx_new_window(ptr.mlx, 500, 500, "FdF");
-	// mlx_hook(ptr.win, 2, 5, handle_key, &ptr);
-	// mlx_loop(ptr.mlx);

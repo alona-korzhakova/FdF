@@ -44,8 +44,7 @@ $(NAME): $(OBJ)
 	@make -C $(LIBDIR)
 	@cp $(LIBFT) $(NAME)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
-	@echo FdF compilation is \done'!' :')'	
-	@./$(NAME) ./maps/42.fdf
+	@echo FdF compilation is \done'!' :')'
 
 clean:
 	@make clean -C $(LIBDIR)
