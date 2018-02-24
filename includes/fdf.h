@@ -44,9 +44,9 @@ typedef struct		s_ptr
 	int				bpp;
 	int				size_line;
 	int				end;
-	int				color;
 	int				size_x;
 	int				size_y;
+	int 			color;
 	char			*addr;
 	double			x;
 	double 			y;
@@ -55,6 +55,7 @@ typedef struct		s_ptr
 	double			Lz;
 	double 			Lx;
 	char			perspective;
+	double			z;
 	t_point 		*point;
 }					t_ptr;
 
@@ -75,10 +76,8 @@ typedef struct		s_dot
 
 void 		addPoint(t_point **point, t_point *new);
 t_point		*createPoint(int x, int y, char *z);
-void 		rotateMap(t_ptr *p);
-void 		projectMap(t_ptr *p);
+void 		rotateMap(t_point *ptr, t_ptr *p);
+void		projectMap(t_point *ptr, t_ptr *p);
 void		drawImage(t_ptr *p);
 
 #endif
-
-	// 

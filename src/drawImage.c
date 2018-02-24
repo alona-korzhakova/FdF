@@ -27,7 +27,6 @@ void	connectDots(t_dot *d, t_ptr *p)
 	d->dy = fabs(d->y1 - d->y0);
 	d->sx = (d->x1 >= d->x0) ? 1 : -1;
 	d->sy = (d->y1 >= d->y0) ? 1 : -1;
-
 	if (d->dy <= d->dx)
 	{
 		d->d = (d->dy << 1) - d->dx;
@@ -84,7 +83,7 @@ void	createImage(t_ptr *p)
 	upperDot = p->point;
 	while (ptr)
 	{
-		i++;	
+		i++;
 		d.x0 = ptr->nx;
 		d.y0 = ptr->ny;
 		drawPixel(d.x0, d.y0, p);

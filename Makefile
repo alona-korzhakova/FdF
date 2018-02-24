@@ -44,8 +44,20 @@ $(NAME): $(OBJ)
 	@make -C $(LIBDIR)
 	@cp $(LIBFT) $(NAME)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
-	@echo FdF compilation is \done'!' :')'
-
+	@echo FdF compilation is \done :')'
+	@echo ----------NAVIGATION-----------
+	@echo -------------------------------
+	@echo '*' TO MODIFY THE MAP PRESS KEYS:  
+	@echo '*' ASWD	- MOVE			  
+	@echo '*' ARROWS - ROTATE 			  
+	@echo '*' P - CHANGE PROJECTION 
+	@echo '*' + - ENLARGE			  
+	@echo '*' - - REDUCE 	
+	@echo '*' PGUP, PGDN - CHANGE ALTITUDE	 			  
+	@echo '*' ENTER - CHANGE COLORS	  
+	@echo '*' SPACE - RESET			 
+	@echo '*' ESC - CLOSE
+	@echo -------------------------------
 clean:
 	@make clean -C $(LIBDIR)
 	@/bin/rm -f $(OBJ) *~
