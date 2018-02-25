@@ -36,6 +36,7 @@ void	initializePtr(t_ptr *p)
 	p->perspective = 0;
 	p->z = 0;
 	p->i = 0;
+	p->minz = 0;
 }
 
 int 	handle_key(int keycode, t_ptr *p)
@@ -58,6 +59,7 @@ int 	handle_key(int keycode, t_ptr *p)
 		p->size_y -= 10;
 	if (keycode == 53)
 	{
+		close(p->fd);
 		ft_putstr("FdF has been closed.\n");
 		exit(0);
 	}
@@ -137,22 +139,26 @@ int	readMap(char *map, t_ptr *p)
 			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i++]));
 			begin = p->point;
 			upper = begin;
+			p->minz = begin->z; //!!!!! change in rotate
 		}
-		while (arr[p->i])
-			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i++]));
+		while (arr[p->i]){
+			addPoint(&p->point, createPoint(p->x++, p->y, arr[p->i]));
+			ft_strdel(&arr[p->i++]);
+		}
 		ft_strdel(&line);
-		ft_strdel(arr);
+		ft_memdel((void **)&arr);
 		p->y++;
 	}
 	if (!p->i)
 		return (0);
-	p->point = begin;
+	p->point = begin;	
 	return (1);
 }
 
 int 	exitFdf(t_ptr *p)
 {
 	p = NULL;
+	close(p->fd);
 	ft_putstr("FdF has been closed.\n");
 	exit(0);
 	return (0);
@@ -167,7 +173,6 @@ int		main(int argc, char **argv)
 		p.point = NULL;
 		p.y = 0;
 		initializePtr(&p);
-		system("leaks fdf");
 		if (!readMap(argv[1], &p))
 		{
 			ft_putstr("error: invalid or empty file\n");
@@ -176,7 +181,8 @@ int		main(int argc, char **argv)
 		centerMap(&p);		
 		p.mlx = mlx_init();
 		p.win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "FdF");
-		drawImage(&p);			
+		drawImage(&p);	
+		system("leaks fdf");		
 		mlx_hook(p.win, 2, 5, handle_key, &p);
 		mlx_hook(p.win, 17, 5, exitFdf, &p);
 		mlx_loop(p.mlx);

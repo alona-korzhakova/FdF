@@ -56,6 +56,7 @@ typedef struct		s_ptr
 	double 			Lx;
 	char			perspective;
 	double			z;
+	double			minz;
 	t_point 		*point;
 }					t_ptr;
 

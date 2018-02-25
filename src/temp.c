@@ -46,3 +46,10 @@ void	projectMap(t_ptr *p)
 		}
 	}
 }
+
+	while (p->point)
+	{
+		temp = p->point;
+		p->point = p->point->next;
+		free(temp);
+	}
