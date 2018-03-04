@@ -29,7 +29,7 @@ typedef struct		s_list
 typedef struct		s_dlist
 {
 	char			*buff;
-	int				fd;	
+	int				fd;
 	struct s_dlist	*next;
 	struct s_dlist	*prev;
 }					t_dlist;
